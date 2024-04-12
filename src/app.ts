@@ -95,6 +95,7 @@ const axiosInstance = axios.create({
 		"sec-fetch-mode": "cors",
 		"sec-fetch-site": "same-origin",
 		"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
+                ...(process.env.ACCESS_TOKEN && {"Authorization": `Bearer ${process.env.ACCESS_TOKEN}`}),
 	},
 });
 
@@ -341,6 +342,7 @@ app.listen(port, () => {
 				await getNewSessionId();
 				await wait(refreshInterval);
 			} catch (error) {
+                                console.error(error)
 				console.error("Error refreshing session ID, retrying in 2 minute...");
 				console.error("If this error persists, your country may not be supported yet.");
 				console.error("If your country was the issue, please consider using a U.S. VPN.");
